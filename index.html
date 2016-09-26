@@ -7,6 +7,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.2/lodash.js"></script>
   </head>
   <body ng-controller="TodoCtrl">
+    <select ng-model="sortOption">
+      <option value="compOnTop"></option>
+      <option value="compOnBottom"></option>
+      <option value="dueDateDesc"></option>
+      <option value="dueDateAsc"></option>
+      <option value="none"></option>
+    </select>
     <form class="col-xs-offset-3">
       <input type="text" name="text" placeholder="text" ng-model="newTodo.text">
       <input type="date" name="dueDate" ng-model="newTodo.dueDate">
@@ -23,17 +30,12 @@
       <tbody>
         <tr todo-directive item='item' ng-repeat="item in items | checkVisible:filterActive">
         </tr>
-        <!-- <tr ng-repeat="item in items | checkVisible:filterActive">
-          <td>{{ item.text }}</td>
-          <td>{{item.dueDate | date}}</td>
-          <td><input type="checkbox" value="{{item.completed}}" ng-model="item.completed"></td>
-          <td><a ng-click="removeTodo(item)">X</a></td>
-        </tr> -->
       </tbody>
     </table>
-    <button ng-click="clearCompleted()">Clear Completed</button>
+    <button ng-click="removeCompleted()">Clear Completed</button>
     <button id="completed" ng-click="showCompleted()">{{showText}}</button>
   </body>
   <script src="app.js"></script>
+  <script src="todo_service.js"></script>
   <script src="todo_directive.js"></script>
 </html>

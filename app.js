@@ -8,23 +8,38 @@ app.factory('_', ['$window', function($window) {
 app.controller('TodoCtrl', ['$scope','$window', '_', 'todoService',
 function($scope, $window, _, todoService){
 
+  $scope.newTodo = {
+    text: '',
+    dueDate: '',
+    completed: false
+  };
+
   // State.
   $scope.items = todoService.items;
   $scope.item = todoService.item;
-  $scope.clearCompleted = todoService.clearCompleted;
-  $scope.createTodo = todoService.createTodo;
+
+  $scope.removeCompleted = function() {
+    todoService.removeCompleted();
+  };
+
+  $scope.createTodo = function() {
+    $window.alert('Todo Created');
+    todoService.createTodo(angular.copy($scope.newTodo));
+    $scope.newTodo = {};
+  };
 
   // Presentation.
   $scope.showText = "Show Completed";
   $scope.filterActive = false;
 
   $scope.showCompleted = function(){
-    if (todoService.filterActive){
-      todoService.showText = "Hide Completed";
+    console.log($scope.sortOption);
+    if ($scope.filterActive){
+      $scope.showText = "Hide Completed";
     } else {
-      todoService.showText = "Show Completed";
+      $scope.showText = "Show Completed";
     }
-    todoService.filterActive = !todoService.filterActive;
+    $scope.filterActive = !$scope.filterActive;
     return;
   };
 

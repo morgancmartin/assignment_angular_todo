@@ -1,12 +1,6 @@
-app.factory('todoService', function() {
+app.factory('todoService', [function($window) {
 
   var todoService = {};
-
-  todoService.newTodo = {
-    text: '',
-    dueDate: '',
-    completed: false
-  };
 
   todoService.item = {
     text: "Get groceries from the store",
@@ -14,7 +8,7 @@ app.factory('todoService', function() {
     completed: false
   };
 
-  todoService.clearCompleted = function() {
+  todoService.removeCompleted = function() {
     var item;
     for(var i = todoService.items.length - 1; i >= 0; i--){
       item = todoService.items[i];
@@ -25,14 +19,8 @@ app.factory('todoService', function() {
     }
   };
 
-  todoService.createTodo = function() {
-    $window.alert('Todo Created');
-    todoService.items.push({
-      text: todoService.newTodo.text,
-      dueDate: todoService.newTodo.dueDate,
-      completed: todoService.newTodo.completed
-    });
-    todoService.newTodo = {};
+  todoService.createTodo = function(item) {
+    todoService.items.push(item);
   };
 
   todoService.removeTodo = function(item){
@@ -48,4 +36,4 @@ app.factory('todoService', function() {
 
   return todoService;
 
-});
+}]);
