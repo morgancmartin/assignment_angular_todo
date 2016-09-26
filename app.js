@@ -12,6 +12,10 @@ app.controller('TodoCtrl', ['$scope','$window', '_', function($scope, $window, _
                   dueDate: new Date(),
                   completed: false };
 
+  $scope.filterActive = false;
+
+  $scope.showText = "Show Completed";
+
   $scope.clearCompleted = function() {
     var item;
     for(var i = $scope.items.length - 1; i >= 0; i--){
@@ -30,9 +34,7 @@ app.controller('TodoCtrl', ['$scope','$window', '_', function($scope, $window, _
       dueDate: $scope.newTodo.dueDate,
       completed: $scope.newTodo.completed
     });
-    $scope.newTodo.text = '';
-    $scope.newTodo.dueDate = '';
-    $scope.newTodo.completed = false;
+    $scope.newTodo = {};
   };
 
   $scope.removeTodo = function(item){
@@ -45,4 +47,34 @@ app.controller('TodoCtrl', ['$scope','$window', '_', function($scope, $window, _
     {text: 'Get a milli', dueDate: new Date(), completed: false},
     {text: 'Get a billi', dueDate: new Date(), completed: false},
   ];
+
+  $scope.showCompleted = function(){
+    if ($scope.filterActive){
+      $scope.showText = "Hide Completed"
+    } else {
+      $scope.showText = "Show Completed"
+    }
+    $scope.filterActive = !$scope.filterActive;
+    return;
+  };
+
 }]);
+
+app.filter('checkVisible', function(){
+
+    return function(items, flag){
+      if(flag){
+        var filtered = [];
+        for (var i =0; i < items.length; i++){
+            var item = items[i];
+            if (!item.completed){
+              filtered.push(item);
+            }
+        }
+        return filtered;
+      } else {
+          return items;
+      }
+    };
+
+});

@@ -7,29 +7,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.2/lodash.js"></script>
   </head>
   <body ng-controller="TodoCtrl">
-  <form class="col-xs-offset-3">
-    <input type="text" name="text" placeholder="text" ng-model="newTodo.text">
-    <input type="date" name="dueDate" ng-model="newTodo.dueDate">
-    <button ng-click="createTodo()">Create ToDo</button>
-  </form>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Date</th>
-        <th>Completed</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="item in items">
-        <td>{{ item.text }}</td>
-        <td>{{item.dueDate | date}}</td>
-        <td><input type="checkbox" value="{{item.completed}}" ng-model="item.completed"></td>
-        <td><a ng-click="removeTodo(item)">X</a></td>
-      </tr>
-    </tbody>
-  </table>
-  <button ng-click="clearCompleted()">Clear Completed</button>
+    <form class="col-xs-offset-3">
+      <input type="text" name="text" placeholder="text" ng-model="newTodo.text">
+      <input type="date" name="dueDate" ng-model="newTodo.dueDate">
+      <button ng-click="createTodo()">Create ToDo</button>
+    </form>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Date</th>
+          <th>Completed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in items | checkVisible:filterActive">
+          <td>{{ item.text }}</td>
+          <td>{{item.dueDate | date}}</td>
+          <td><input type="checkbox" value="{{item.completed}}" ng-model="item.completed"></td>
+          <td><a ng-click="removeTodo(item)">X</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <button ng-click="clearCompleted()">Clear Completed</button>
+    <button id="completed" ng-click="showCompleted()">{{showText}}</button>
   </body>
   <script src="app.js"></script>
 </html>
